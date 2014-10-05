@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Binding</title>
+	<link rel="stylesheet" href="../../../vendor/foundation/css/foundation.min.css">
+</head>
+<body>
+	<div ng-controller="CartController">
+		<h1>Su orden:</h1>
+		<div ng-repeat="item in items">
+			<span>{{item.title}}</span>
+			<input type="number" ng-model="item.quantity">
+			<span>{{item.price | currency}}</span>
+			<span>{{item.price * item.quantity | currency}}</span>
+			<button ng-click="remove($index)">Eliminar</button>
+		</div>
+	</div>
+
+	<div ng-controller="ExampleController">
+		<form novalidate class="css-form" name="form">
+			Name: <input type="text" ng-model="user.name" required /><br />
+			E-mail: <input type="email" ng-model="user.email" name="uEmail" required /><br />
+			<div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
+				<span ng-show="form.uEmail.$error.required"> Dinos tu email.</span>
+				<span ng-show="form.uEmail.$error.email"> Este no es un email valido.</span>
+			</div>
+			Gender: <input type="radio" ng-model="user.gender" value="male" />male
+			<input type="radio" ng-model="user.gender" value="female" />female<br />
+			<input type="checkbox" ng-model="user.agree" name="uAgree" required/>
+			I agree: <input type="text" ng-show="user.agree" ng-model="user.agreeSign" required /><br />
+			<div ng-show="!user.agree || !user.agreeSign">Por favor agree and sign</div>
+			<button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
+			<button ng-click="update(user)" ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
+		</form>
+	</div>
+
+<style type="text/css">
+  .css-form input.ng-invalid.ng-dirty {
+    background-color: #FA787E;
+  }
+
+  .css-form input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+  }
+</style>
+
+
+	<script type="text/javascript" src="../../../vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
